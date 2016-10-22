@@ -29,7 +29,7 @@ app.listen((process.env.PORT || 8181));
 
 console.log ("Inicializando App...");
 app.get("/", function (req, res)  {
-  res.send("Este eh um Bot");
+  res.send("Este eh um Bot e agora eh:" + Date.now());
 });
 
 app.get("/webhook", function(req, res)  {
