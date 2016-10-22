@@ -5,7 +5,7 @@ app = express();
 
 app.use (bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.listen((process.env.PORT ||));
+app.listen((process.env.PORT || 8181));
 
 app.get("/", function (req, res)  {
   res.send("Este eh um Bot");
