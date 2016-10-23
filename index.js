@@ -15,40 +15,52 @@ function receivedMessage (event)  {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem %s",
-              senderID,
-              recipientID,
-              timeOfMessage,
-              JSON.stringify(message));
+//Verifica se a mensagem nao eh um echo para checagem
+  if (message.is_echo)  {
+    console.log("[RECEIVED_MESSAGE] Mensagem de echo recebida da pagina %d e para o usuario %d em %d com mensagem %s",
+                senderID,
+                recipientID,
+                timeOfMessage,
+                JSON.stringify(message));
 
-  var messageID = message.mid;
+  }           else        {
 
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
+    console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem %s",
+                senderID,
+                recipientID,
+                timeOfMessage,
+                JSON.stringify(message));
 
-  if (messageText)  {
-    switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
 
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
+    var messageID = message.mid;
 
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
+    var messageText = message.text;
+    var messageAttachments = message.attachments;
 
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
+    if (messageText)  {
+      switch (messageText) {
+        case 'image':
+          sendImageMessage(senderID);
+          break;
 
-      default:
-        sendTextMessage(senderID, messageText);
+        case 'button':
+          sendButtonMessage(senderID);
+          break;
+
+        case 'generic':
+          sendGenericMessage(senderID);
+          break;
+
+        case 'receipt':
+          sendReceiptMessage(senderID);
+          break;
+
+        default:
+          sendTextMessage(senderID, messageText);
+      }
+    } else if (messageAttachments) {
+      sendTextMessage(senderID, "Mensagem com anexo recebida");
     }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Mensagem com anexo recebida");
   }
 }
 
