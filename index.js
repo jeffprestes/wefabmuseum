@@ -112,7 +112,7 @@ function envioGenerico(recipientID, messageData)  {
     } else if (response.body.error) {
       console.log("[ENVIO_GENERICO]: erro: %s", response.body.error);
 
-    } else if (!error && response.statusCode == 200) {
+    } else if (!erro && response.statusCode == 200) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
 
