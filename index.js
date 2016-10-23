@@ -1,7 +1,6 @@
 express = require('express');
 bodyParser = require('body-parser');
 request = require('request');
-var usuario;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Funcoes de recebimento de mensagem
@@ -60,6 +59,7 @@ function receivedMessage (event)  {
           messageText = messageText.trim().toLowerCase();
           var attachment = " ";
 
+          //Obtendo o usuario
           request({
             url: 'https://graph.facebook.com/v2.6/'+senderID+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+process.env.PAGE_ACCESS_TOKEN,
             method: 'GET'
@@ -73,7 +73,8 @@ function receivedMessage (event)  {
 
             } else if (!erro && response.statusCode == 200) {
               console.log("[RECEIVED_MESSAGE]: Usuario retornado %s", JSON.stringify(body));
-              usuario = body;
+              var usuario = body;
+              console.log("[RECEIVED_MESSAGE]: Nome=" + usuario.first_name);
 
               if (messageText == 'iniciar')  {
 
