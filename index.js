@@ -109,7 +109,7 @@ function sendTextMessage(recipientID, messageText)  {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function envioGenerico(recipientID, messageData)  {
 
-  console.log ("[ENVIO_GENERICO]: Enviando a mensagem: %d para %s", recipientID, JSON.stringify(messageData));
+  console.log ("[ENVIO_GENERICO]: Enviando a mensagem %s", JSON.stringify(messageData));
 
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -165,6 +165,7 @@ app.post("/webhook", function(req, res) {
 
   var data = req.body;
   console.log("[POST WEBHOOK]: Objeto recebido: ", data);
+  console.log("-                                                           +");
 
   if (data.object == 'page')  {
 
