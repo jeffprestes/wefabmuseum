@@ -57,7 +57,7 @@ function receivedMessage (event)  {
         default:
           var msg = "";
           messageText = messageText.trim().toLowerCase();
-          var attachment = "";
+          var attachment = " ";
 
           //Texto nao pode passar de 320 caracters
           if (messageText == 'iniciar')  {
@@ -88,7 +88,8 @@ function receivedMessage (event)  {
           }
 
           //Voce precisa fazer uma chamada para enviar uma imagem e outra mensagem para o texto
-          if (attachment!="")   {
+          console.log("[RECEIVED_MESSAGE] attachment = [" + attachment + "]");
+          if (attachment != " ")   {
             sendImageMessage(senderID, attachment);
           }
 
