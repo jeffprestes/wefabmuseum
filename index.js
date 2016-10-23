@@ -87,6 +87,7 @@ function receivedMessage (event)  {
             msg = "Desculpe, não entendi a mensagem: " + message.text;
           }
 
+          console.log ("[RECEIVED_MESSAGE] Attacment = " + attachment);
           if (attachment!=null)   {
             sendTextMessage(senderID, msg, attachment);
           } else  {
@@ -132,7 +133,7 @@ function sendTextMessage(recipientID, messageText)  {
 }
 
 function sendTextMessage(recipientID, messageText, attachmentUrl)  {
-  if (attachmentUrl!=null)  {
+  if (attachmentUrl != null)  {
     var msg = {
       text: messageText,
       attachment: {
