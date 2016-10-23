@@ -60,55 +60,78 @@ function receivedMessage (event)  {
           messageText = messageText.trim().toLowerCase();
           var attachment = " ";
 
-          //Texto nao pode passar de 320 caracters
-          if (messageText == 'iniciar')  {
+          request({
+            url: 'https://graph.facebook.com/v2.6/'+userId+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+process.env.PAGE_ACCESS_TOKEN,
+            method: 'GET'
+          }, function (erro, response, body) {
 
-            obtemDadoUsuario(senderID);
+            if (erro)  {
+              console.log("[RECEIVED_MESSAGE]: Erro ao obter usuario: %s", erro);
+              msg = "Erro ao obter usuario";
+              sendTextMessage(senderID, msg);
+              return;
 
-            if (usuario.gender!==undefined && usuario.gender ==='male')   {
-              var welcome = "bem vindo";
-              var nome = ", " + usuario.first_name + ", ";
-            } else if (usuario.gender!==undefined && usuario.gender ==='female')   {
-              var welcome = "bem vinda";
-              var nome = ", " + usuario.first_name + ", ";
-            } else {
-              var welcome = "bem vindo(a)";
-              var nome = "";
+            } else if (!erro && response.statusCode == 200) {
+              console.log("[RECEIVED_MESSAGE]: Usuario retornado %s", JSON.stringify(body));
+              usuario = body;
+
+              if (messageText == 'iniciar')  {
+
+                if (usuario.gender!==undefined && usuario.gender ==='male')   {
+                  var welcome = "bem vindo";
+                  var nome = ", " + usuario.first_name + ", ";
+                } else if (usuario.gender!==undefined && usuario.gender ==='female')   {
+                  var welcome = "bem vinda";
+                  var nome = ", " + usuario.first_name + ", ";
+                } else {
+                  var welcome = "bem vindo(a)";
+                  var nome = "";
+                }
+
+                msg = "Olá " + nome + " seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
+                msg += "Quando quiser uma informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
+
+              } else if (messageText == 'marco castillo')  {
+                msg = "Marco Antonio Castillo Valdes, nació el 18 de septiembre de 1971 en Camagüey, Cuba. \nGraduado en 1994 del Instituto Superior de Arte (ISA), La Habana, Cuba.";
+
+              } else if (messageText == 'tocador de pifaro' || messageText == 'o tocador de pifaro')  {
+                msg = "Esta tela foi recusada no Salão de Outono de Paris de 1867, que ainda vivia sob o domínio da estética acadêmica. ";
+                msg += "Manet apresenta um menino humilde, que parece ser um pouco manco...";
+                attachment = "https://deborando.files.wordpress.com/2012/10/o-tocador-de-pc3adfaro-edouard-manet-reproducao.jpg";
+
+              } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
+                msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
+
+              //Trick part - Só para ter algo secreto e divertido ;)
+              } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
+                if (senderID == 1490960767586723)   {
+                  msg = "Ele te ama <3!!";
+                } else if (senderID == 1142580935820395)  {
+                  msg = "Ele te ama <3!!";
+                }
+
+              } else {
+                msg = "Desculpe, não entendi a mensagem: " + message.text;
+              }
+
+              //Voce precisa fazer uma chamada para enviar uma imagem e outra mensagem para o texto
+              console.log("[RECEIVED_MESSAGE] attachment = [" + attachment + "]");
+              if (attachment != " ")   {
+                sendImageMessage(senderID, attachment);
+              }
+
+              sendTextMessage(senderID, msg);
             }
 
-            msg = "Olá " + usuario.first_name + " seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
-            msg += "Quando quiser uma informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
-
-          } else if (messageText == 'marco castillo')  {
-            msg = "Marco Antonio Castillo Valdes, nació el 18 de septiembre de 1971 en Camagüey, Cuba. \nGraduado en 1994 del Instituto Superior de Arte (ISA), La Habana, Cuba.";
-
-          } else if (messageText == 'tocador de pifaro' || messageText == 'o tocador de pifaro')  {
-            msg = "Esta tela foi recusada no Salão de Outono de Paris de 1867, que ainda vivia sob o domínio da estética acadêmica. ";
-            msg += "Manet apresenta um menino humilde, que parece ser um pouco manco...";
-            attachment = "https://deborando.files.wordpress.com/2012/10/o-tocador-de-pc3adfaro-edouard-manet-reproducao.jpg";
-
-          } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
-            msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
-
-          //Trick part - Só para ter algo secreto e divertido ;)
-          } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
-            if (senderID == 1490960767586723)   {
-              msg = "Ele te ama <3!!";
-            } else if (senderID == 1142580935820395)  {
-              msg = "Ele te ama <3!!";
+            if (response.body.error) {
+                console.log("[RECEIVED_MESSAGE]: Erro no corpo da requisicao do usuario: %s", JSON.stringify(response.body.error));
+                msg = "Erro ao obter usuario";
+                sendTextMessage(senderID, msg);
+                return;
             }
+          });
 
-          } else {
-            msg = "Desculpe, não entendi a mensagem: " + message.text;
-          }
 
-          //Voce precisa fazer uma chamada para enviar uma imagem e outra mensagem para o texto
-          console.log("[RECEIVED_MESSAGE] attachment = [" + attachment + "]");
-          if (attachment != " ")   {
-            sendImageMessage(senderID, attachment);
-          }
-
-          sendTextMessage(senderID, msg);
 
       }
     } else if (messageAttachments) {
