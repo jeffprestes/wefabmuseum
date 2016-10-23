@@ -80,14 +80,11 @@ function receivedMessage (event)  {
 
                 if (usuario.gender ==='male')   {
                   var welcome = "bem vindo";
-                  var nome = ", " + body.first_name + ", ";
+                  var nome = ", " + usuario.first_name + ", ";
                 } else if (usuario.gender ==='female')   {
                   var welcome = "bem vinda";
-                  var nome = ", " + body.first_name + ", ";
-                } else {
-                  var welcome = "bem vindo(a)";
-                  var nome = "";
-                }
+                  var nome = ", " + usuario.first_name + ", ";
+                } 
 
                 msg = "Olá " + nome + " seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
                 msg += "Quando quiser uma informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
