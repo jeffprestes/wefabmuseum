@@ -58,6 +58,7 @@ function receivedMessage (event)  {
           var msg = "";
           messageText = messageText.trim().toLowerCase();
 
+          //Texto nao pode passar de 320 caracters
           if (messageText == 'iniciar')  {
             msg = "Olá, seja bem vindo(a), vamos começar a nossa visita ao museu.\n";
             msg += "Quando quiser informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
@@ -67,13 +68,11 @@ function receivedMessage (event)  {
 
           } else if (messageText == 'tocador de pifaro' || messageText == 'o tocador de pifaro')  {
             msg = "Esta tela foi recusada no Salão de Outono de Paris de 1867, que ainda vivia sob o domínio da estética acadêmica. ";
-            msg += "Manet apresenta um menino humilde, que parece ser um pouco manco, vestido com o mesmo uniforme usado pelos filhos dos oficiais da Guarda Imperial de Napoelão III, ";
-            msg += "que também usavam calças vermelhas com listras laterais pretas, jaquetas pretas com botões dourados, uma faixa branca na cintura, além do boné. Não bastasse isso, ";
-            msg += "Manet o pintou em tamanho grande, o que gerou escândalos numa época em que as pinturas em formato grande era restrita às pinturas históricas ou de personalidades influentes.";
+            msg += "Manet apresenta um menino humilde, que parece ser um pouco manco...";
 
           } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
-            msg = "Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX, ";
-            msg += "considerado por estudiosos de artes plásticas como um dos mais importantes representantes do impressionismo francês, embora muitas de suas obras possuam fortes características do realismo.";
+            msg = "Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
+
 
           //Trick part - Só para ter algo secreto e divertido ;)
           } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
