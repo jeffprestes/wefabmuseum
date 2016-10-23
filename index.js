@@ -6,7 +6,7 @@ request = require('request');
 //Funcoes de recebimento de mensagem
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function receivedAuthentication(event)  {
-  console.log("receivedAuthentication: ", event);
+  console.log("[RECEIVED_Authentication] received");
 }
 
 function receivedMessage (event)  {
@@ -15,7 +15,7 @@ function receivedMessage (event)  {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem: ",
+  console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem: ",
               senderID,
               recipientID,
               timeOfMessage,
@@ -54,11 +54,11 @@ function receivedMessage (event)  {
 }
 
 function receivedDeliveryConfirmation(event)  {
-  console.log("Messagem entregue: ", event);
+  console.log("[receivedDeliveryConfirmation] A Messagem " + event.message.mid + " foi entregue em " + event.timestamp);
 }
 
 function receivedPostback(event)  {
-  console.log("receivedPostback: ", event);
+  console.log("[receivedPostback]: ");
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -104,13 +104,13 @@ function envioGenerico(recipientID, messageData)  {
     json: messageData
   }, function (erro, response, body) {
     if (erro)  {
-      console.log("Erro enviando mensagem: ", erro);
+      console.log("[ENVIO_GENERICO]: Erro enviando mensagem: ", erro);
     } else if (response.body.error) {
-      console.log("erro: ", response.body.error);
+      console.log("[ENVIO_GENERICO]: erro: ", response.body.error);
     }
   });
 
-  console.log ("Enviado a mensagem: %d para %d", recipientID, JSON.stringify(messageData));
+  console.log ("[ENVIO_GENERICO]: Enviado a mensagem: %d para %d", recipientID, JSON.stringify(messageData));
 }
 
 console.log ("Inicializando App...");
@@ -128,18 +128,18 @@ app.get("/", function (req, res)  {
 app.get("/webhook", function(req, res)  {
   console.log("validate webtoken");
   if (req.query['hub.verify_token']==='webfab_museum_token')  {
-    console.log("Validated webtoken");
+    console.log("[GET WEBHOOK]: Validated webtoken");
     res.status(200).send(req.query['hub.challenge']);
   } else {
-    console.error('Token de validacao invalido');
+    console.error('[GET WEBHOOK]: Token de validacao invalido');
     res.sendStatus(403);
   }
 });
 
 app.post("/webhook", function(req, res) {
-  console.log("Recieving Messages");
+
   var data = req.body;
-  console.log("Objeto recebido: ", data);
+  console.log("[POST WEBHOOK]: Objeto recebido: ", data);
 
   if (data.object == 'page')  {
     data.entry.forEach (function (pageEntry)  {
@@ -161,7 +161,7 @@ app.post("/webhook", function(req, res) {
           recievedPostback(messagingEvent);
 
         } else {
-          console.log("Webhook recebeu um evento de mensagem desconhecido: ", messagingEvent);
+          console.log("[POST WEBHOOK]: Webhook recebeu um evento de mensagem desconhecido: ", messagingEvent);
         }
 
       });
