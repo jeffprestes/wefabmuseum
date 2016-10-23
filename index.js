@@ -33,7 +33,6 @@ function receivedMessage (event)  {
 
 
     var messageID = message.mid;
-
     var messageText = message.text;
     var messageAttachments = message.attachments;
 
@@ -56,7 +55,20 @@ function receivedMessage (event)  {
           break;
 
         default:
-          sendTextMessage(senderID, messageText);
+          var msg = "";
+          
+          if (messageText == 'iniciar')  {
+            msg = "Olá, seja bem vindo(a), vamos começar a nossa visita ao museu.\n";
+            msg += "Quando quiser informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
+            sendTextMessage(senderID, msg);
+
+          } else if (messageText == 'Marco Castillo')  {
+            msg = "Marco Antonio Castillo Valdes, nació el 18 de septiembre de 1971 en Camagüey, Cuba. \nGraduado en 1994 del Instituto Superior de Arte (ISA), La Habana, Cuba.";
+
+          } else {
+            msg = messageText;
+          }
+          sendTextMessage(senderID, msg);
       }
     } else if (messageAttachments) {
       sendTextMessage(senderID, "Mensagem com anexo recebida");
