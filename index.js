@@ -57,6 +57,7 @@ function receivedMessage (event)  {
         default:
           var msg = "";
           messageText = messageText.trim().toLowerCase();
+          var attachment = null;
 
           //Texto nao pode passar de 320 caracters
           if (messageText == 'iniciar')  {
@@ -72,7 +73,7 @@ function receivedMessage (event)  {
 
           } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
             msg = "Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
-
+            attachment = "https://deborando.files.wordpress.com/2012/10/o-tocador-de-pc3adfaro-edouard-manet-reproducao.jpg";
 
           //Trick part - Só para ter algo secreto e divertido ;)
           } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
@@ -85,7 +86,13 @@ function receivedMessage (event)  {
           } else {
             msg = "Desculpe, não entendi a mensagem: " + message.text;
           }
-          sendTextMessage(senderID, msg);
+
+          if (attachment!=null)   {
+            sendTextMessage(senderID, msg, attachment);
+          } else  {
+            sendTextMessage(senderID, msg);
+          }
+
       }
     } else if (messageAttachments) {
       sendTextMessage(senderID, "Mensagem com anexo recebida");
@@ -121,14 +128,36 @@ function sendReceiptMessage(recipientID)  {
 }
 
 function sendTextMessage(recipientID, messageText)  {
+  sendTextMessage(recipientID, messageText, null);
+}
+
+function sendTextMessage(recipientID, messageText, attachmentUrl)  {
+  if (attachmentUrl!=null)  {
+    var msg =  {
+      text: messageText,
+      attachment: {
+        type: "image",
+        payload: {
+          url:attachmentUrl
+        }
+      }
+    };
+
+  } else {
+    var msg = {
+      text: messageText
+    };
+  }
+
   var dado = {
     recipient: {
       id: recipientID
     },
     message:  {
-      text: messageText
+      text: msg
     }
   };
+
   envioGenerico(recipientID, dado);
 }
 
