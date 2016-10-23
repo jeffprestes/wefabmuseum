@@ -86,7 +86,7 @@ function receivedMessage (event)  {
             attachment = "https://deborando.files.wordpress.com/2012/10/o-tocador-de-pc3adfaro-edouard-manet-reproducao.jpg";
 
           } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
-            msg = usuario.first_name ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
+            msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
 
           //Trick part - Só para ter algo secreto e divertido ;)
           } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
