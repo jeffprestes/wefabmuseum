@@ -89,7 +89,6 @@ function sendTextMessage(recipientID, messageText)  {
       text: messageText
     }
   };
-  console.log ("Enviado a mensagem: %d para %d", recipientID, dado);
   envioGenerico(recipientID, dado);
 }
 
@@ -111,7 +110,7 @@ function envioGenerico(recipientID, messageData)  {
     }
   });
 
-  console.log ("Enviado a mensagem: %d para %d", recipientID, JSON.stringify(dado));
+  console.log ("Enviado a mensagem: %d para %d", recipientID, JSON.stringify(messageData));
 }
 
 console.log ("Inicializando App...");
