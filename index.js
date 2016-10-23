@@ -1,6 +1,7 @@
 express = require('express');
 bodyParser = require('body-parser');
 request = require('request');
+var usuario;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Funcoes de recebimento de mensagem
@@ -35,7 +36,6 @@ function receivedMessage (event)  {
     var messageID = message.mid;
     var messageText = message.text;
     var messageAttachments = message.attachments;
-    var usuario = obtemDadoUsuario(senderID);
 
     if (messageText)  {
       switch (messageText) {
@@ -63,10 +63,12 @@ function receivedMessage (event)  {
           //Texto nao pode passar de 320 caracters
           if (messageText == 'iniciar')  {
 
-            if (usuario.gender && usuario.gender ==='male')   {
+            obtemDadoUsuario(senderID);
+
+            if (usuario.gender!==undefined && usuario.gender ==='male')   {
               var welcome = "bem vindo";
               var nome = ", " + usuario.first_name + ", ";
-            } else if (usuario.gender && usuario.gender ==='female')   {
+            } else if (usuario.gender!==undefined && usuario.gender ==='female')   {
               var welcome = "bem vinda";
               var nome = ", " + usuario.first_name + ", ";
             } else {
@@ -217,7 +219,7 @@ function obtemDadoUsuario(userId)   {
 
     } else if (!erro && response.statusCode == 200) {
         console.log("[OBTEM_DADO_USUARIO]: Usuario retornado %s", JSON.stringify(body));
-        return body;
+        usuario = body;
     }
 
     if (response.body.error) {
