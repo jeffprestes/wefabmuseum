@@ -206,7 +206,7 @@ function obtemDadoUsuario(userId)   {
 
   console.log ("[OBTEM_DADO_USUARIO]: Buscando dado do usuario %d", userId);
 
-  request({
+  return request({
     url: 'https://graph.facebook.com/v2.6/'+userId+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+process.env.PAGE_ACCESS_TOKEN,
     method: 'GET'
   }, function (erro, response, body) {
