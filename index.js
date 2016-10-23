@@ -88,10 +88,10 @@ function receivedMessage (event)  {
           }
 
           if (attachment!="")   {
-            sendTextMessage(senderID, msg, attachment);
-          } else  {
-            sendTextMessage(senderID, msg);
+            sendImageMessage(senderID, attachment);
           }
+
+          sendTextMessage(senderID, msg);
 
       }
     } else if (messageAttachments) {
@@ -111,10 +111,6 @@ function receivedPostback(event)  {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Funcoes de envio de mensagem
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function sendImageMessage(recipientID)  {
-  sendTextMessage(recipientID, "Respondendo uma imagem");
-}
-
 function sendButtonMessage(recipientID)  {
   sendTextMessage(recipientID, "Respondendo um botao");
 }
@@ -128,32 +124,31 @@ function sendReceiptMessage(recipientID)  {
 }
 
 function sendTextMessage(recipientID, messageText)  {
-  sendTextMessage(recipientID, messageText, null);
+  var dado = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: messageText
+    };
+  };
+
+  envioGenerico(recipientID, dado);
 }
 
-function sendTextMessage(recipientID, messageText, attachmentUrl)  {
-  if (attachmentUrl != "")  {
-    var msg = {
-      text: messageText,
+function sendImageMessage(recipientID, attachmentUrl)  {
+  var dado = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
       attachment: {
         type: "image",
         payload: {
           url:attachmentUrl
         }
       }
-    };
-
-  } else {
-    var msg = {
-      text: messageText
-    };
-  }
-
-  var dado = {
-    recipient: {
-      id: recipientID
-    },
-    message: msg
+    }
   };
 
   envioGenerico(recipientID, dado);
