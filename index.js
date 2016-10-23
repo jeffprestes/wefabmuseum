@@ -73,7 +73,7 @@ function receivedMessage (event)  {
 
             } else if (!erro && response.statusCode == 200) {
               console.log("[RECEIVED_MESSAGE]: Usuario retornado %s", JSON.stringify(body));
-              console.log("[RECEIVED_MESSAGE]: Nome=" + response.body.first_name);
+              console.log("[RECEIVED_MESSAGE]: Nome=" + response.body);
 
               if (messageText == 'iniciar')  {
 
