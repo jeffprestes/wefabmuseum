@@ -15,11 +15,11 @@ function receivedMessage (event)  {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem: ",
+  console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem %s",
               senderID,
               recipientID,
-              timeOfMessage);
-  console.log("[RECEIVED_MESSAGE] %s", JSON.stringify(message));
+              timeOfMessage,
+              JSON.stringify(message));
 
   var messageID = message.mid;
 
@@ -109,15 +109,17 @@ function envioGenerico(recipientID, messageData)  {
     if (erro)  {
       console.log("[ENVIO_GENERICO]: Erro enviando mensagem: %s", erro);
 
-    } else if (response.body.error) {
-      console.log("[ENVIO_GENERICO]: erro: %s", response.body.error);
-
-    } else if (!erro && response.statusCode == 200) {
+    }  else if (!erro && response.statusCode == 200) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
 
       console.log("[ENVIO_GENERICO]: Mensagem generica enviada com sucesso de ID %s para recebedor %s",
         messageId, recipientId);
+    }
+
+    if (response.body.error) {
+      console.log("[ENVIO_GENERICO]: Erro no corpo: %s", JSON.stringify(response.body.error));
+
     }
   });
 
