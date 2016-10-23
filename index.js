@@ -155,7 +155,7 @@ app.post("/webhook", function(req, res) {
           receivedMessage(messagingEvent);
 
         } else if (messagingEvent.delivery) {
-          recievedDeliveryConfirmation(messagingEvent);
+          receivedDeliveryConfirmation(messagingEvent);
 
         } else if (messagingEvent.postback) {
           recievedPostback(messagingEvent);
