@@ -53,7 +53,7 @@ function receivedMessage (event)  {
 }
 
 function receivedDeliveryConfirmation(event)  {
-  console.log("[receivedDeliveryConfirmation] A Messagem " + JSON.stringify(event) + " foi entregue em " + event.timestamp);
+  console.log("[RECEIVED_DELIVERY_CONFIRMATION] A Messagem " + JSON.stringify(event) + " foi entregue ");
 }
 
 function receivedPostback(event)  {
@@ -153,6 +153,7 @@ app.post("/webhook", function(req, res) {
   console.log("[POST WEBHOOK]: Objeto recebido: ", data);
 
   if (data.object == 'page')  {
+
     data.entry.forEach (function (pageEntry)  {
       var pageId = pageEntry.id;
       var timeOfEvent = pageEntry.time;
