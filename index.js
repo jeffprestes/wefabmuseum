@@ -87,6 +87,7 @@ function receivedMessage (event)  {
             msg = "Desculpe, não entendi a mensagem: " + message.text;
           }
 
+          //Voce precisa fazer uma chamada para enviar uma imagem e outra mensagem para o texto
           if (attachment!="")   {
             sendImageMessage(senderID, attachment);
           }
@@ -130,7 +131,7 @@ function sendTextMessage(recipientID, messageText)  {
     },
     message: {
       text: messageText
-    };
+    }
   };
 
   envioGenerico(recipientID, dado);
