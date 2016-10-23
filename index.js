@@ -133,7 +133,7 @@ function sendTextMessage(recipientID, messageText)  {
 
 function sendTextMessage(recipientID, messageText, attachmentUrl)  {
   if (attachmentUrl!=null)  {
-    var msg =  {
+    var msg = {
       text: messageText,
       attachment: {
         type: "image",
@@ -153,9 +153,7 @@ function sendTextMessage(recipientID, messageText, attachmentUrl)  {
     recipient: {
       id: recipientID
     },
-    message:  {
-      text: msg
-    }
+    message: msg
   };
 
   envioGenerico(recipientID, dado);
