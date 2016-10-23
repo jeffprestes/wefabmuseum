@@ -61,7 +61,7 @@ function receivedMessage (event)  {
           var attachment = " ";
 
           request({
-            url: 'https://graph.facebook.com/v2.6/'+userId+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+process.env.PAGE_ACCESS_TOKEN,
+            url: 'https://graph.facebook.com/v2.6/'+senderID+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+process.env.PAGE_ACCESS_TOKEN,
             method: 'GET'
           }, function (erro, response, body) {
 
@@ -77,10 +77,10 @@ function receivedMessage (event)  {
 
               if (messageText == 'iniciar')  {
 
-                if (usuario.gender!==undefined && usuario.gender ==='male')   {
+                if (usuario.gender ==='male')   {
                   var welcome = "bem vindo";
                   var nome = ", " + usuario.first_name + ", ";
-                } else if (usuario.gender!==undefined && usuario.gender ==='female')   {
+                } else if (usuario.gender ==='female')   {
                   var welcome = "bem vinda";
                   var nome = ", " + usuario.first_name + ", ";
                 } else {
