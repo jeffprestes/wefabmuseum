@@ -18,9 +18,8 @@ function receivedMessage (event)  {
   console.log("[RECEIVED_MESSAGE] Mensagem recebida para o usuario %d e a pagina %d em %d com mensagem: ",
               senderID,
               recipientID,
-              timeOfMessage,
-              console.log(JSON.stringify(message))
-              );
+              timeOfMessage);
+  console.log("[RECEIVED_MESSAGE] %s", JSON.stringify(message));
 
   var messageID = message.mid;
 
@@ -54,7 +53,7 @@ function receivedMessage (event)  {
 }
 
 function receivedDeliveryConfirmation(event)  {
-  console.log("[receivedDeliveryConfirmation] A Messagem " + event.message.mid + " foi entregue em " + event.timestamp);
+  console.log("[receivedDeliveryConfirmation] A Messagem " + JSON.stringify(event) + " foi entregue em " + event.timestamp);
 }
 
 function receivedPostback(event)  {
@@ -97,20 +96,32 @@ function sendTextMessage(recipientID, messageText)  {
 //Funcao de envio de mensagem com conteudo generico
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function envioGenerico(recipientID, messageData)  {
+
+  console.log ("[ENVIO_GENERICO]: Enviando a mensagem: %d para %s", recipientID, JSON.stringify(messageData));
+
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
     method: 'POST',
     json: messageData
   }, function (erro, response, body) {
+
     if (erro)  {
-      console.log("[ENVIO_GENERICO]: Erro enviando mensagem: ", erro);
+      console.log("[ENVIO_GENERICO]: Erro enviando mensagem: %s", erro);
+
     } else if (response.body.error) {
-      console.log("[ENVIO_GENERICO]: erro: ", response.body.error);
+      console.log("[ENVIO_GENERICO]: erro: %s", response.body.error);
+
+    } else if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      console.log("[ENVIO_GENERICO]: Mensagem generica enviada com sucesso de ID %s para recebedor %s",
+        messageId, recipientId);
     }
   });
 
-  console.log ("[ENVIO_GENERICO]: Enviado a mensagem: %d para %d", recipientID, JSON.stringify(messageData));
+
 }
 
 console.log ("Inicializando App...");
