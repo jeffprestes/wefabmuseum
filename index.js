@@ -63,13 +63,18 @@ function receivedMessage (event)  {
           //Texto nao pode passar de 320 caracters
           if (messageText == 'iniciar')  {
 
-            if (usuario.gender ==='male')   {
+            if (usuario.gender && usuario.gender ==='male')   {
               var welcome = "bem vindo";
-            } else {
+              var nome = ", " + usuario.first_name + ", ";
+            } else if (usuario.gender && usuario.gender ==='female')   {
               var welcome = "bem vinda";
+              var nome = ", " + usuario.first_name + ", ";
+            } else {
+              var welcome = "bem vindo(a)";
+              var nome = "";
             }
 
-            msg = "Olá, " + usuario.first_name + ", seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
+            msg = "Olá " + usuario.first_name + " seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
             msg += "Quando quiser uma informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
 
           } else if (messageText == 'marco castillo')  {
@@ -81,7 +86,7 @@ function receivedMessage (event)  {
             attachment = "https://deborando.files.wordpress.com/2012/10/o-tocador-de-pc3adfaro-edouard-manet-reproducao.jpg";
 
           } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
-            msg = "Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
+            msg = usuario.first_name ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
 
           //Trick part - Só para ter algo secreto e divertido ;)
           } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
