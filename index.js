@@ -100,8 +100,11 @@ function receivedMessage (event)  {
               } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
                 msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
 
+              } else if (messageText == 'ajuda' || messageText=='help' || messageText=='duvida')  {
+                msg = usuario.first_name + ", basta informar o artista ou a obra que você quer saber a informação. Como ainda estou aprendendo pode ser que ainda não poderei te responder.";
+
               } else {
-                msg = "Desculpe, não entendi a mensagem: " + message.text;
+                msg = "Desculpe, não entendi a mensagem ou ainda não conheço a obra ou autor que você informou: " + message.text;
               }
 
               //Voce precisa fazer uma chamada para enviar uma imagem e outra mensagem para o texto
