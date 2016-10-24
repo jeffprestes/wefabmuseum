@@ -84,7 +84,7 @@ function receivedMessage (event)  {
                 } else if (usuario.gender ==='female')   {
                   var welcome = "bem vinda";
                   var nome = ", " + usuario.first_name + ", ";
-                } 
+                }
 
                 msg = "Olá " + nome + " seja " + welcome + ", vamos começar a nossa visita ao museu.\n";
                 msg += "Quando quiser uma informação basta informar o nome da obra ou do autor que eu lhe dou detalhes.";
@@ -99,14 +99,6 @@ function receivedMessage (event)  {
 
               } else if (messageText == 'manet' || messageText == 'edouard manet' || messageText == 'édouard manet')  {
                 msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
-
-              //Trick part - Só para ter algo secreto e divertido ;)
-              } else if (messageText == 'erica lima' || messageText == 'jeff prestes' || messageText == 'jefferson prestes')  {
-                if (senderID == 1490960767586723)   {
-                  msg = "Ele te ama <3!!";
-                } else if (senderID == 1142580935820395)  {
-                  msg = "Ele te ama <3!!";
-                }
 
               } else {
                 msg = "Desculpe, não entendi a mensagem: " + message.text;
