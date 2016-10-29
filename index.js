@@ -2,6 +2,9 @@ express = require('express');
 bodyParser = require('body-parser');
 request = require('request');
 
+//Mapa de caracteres de acento em Portugues e Español
+var mapaCaracteres={"ñ":"n","Ñ":"N","â":"a","Â":"A","à":"a","À":"A","á":"a","Á":"A","ã":"a","Ã":"A","ê":"e","Ê":"E","è":"e","È":"E","é":"e","É":"E","î":"i","Î":"I","ì":"i","Ì":"I","í":"i","Í":"I","õ":"o","Õ":"O","ô":"o","Ô":"O","ò":"o","Ò":"O","ó":"o","Ó":"O","ü":"u","Ü":"U","û":"u","Û":"U","ú":"u","Ú":"U","ù":"u","Ù":"U","ç":"c","Ç":"C"};
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //Funcoes de recebimento de mensagem
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -56,7 +59,7 @@ function receivedMessage (event)  {
 
         default:
           var msg = "";
-          messageText = messageText.trim().toLowerCase();
+          messageText = removerAcentos(messageText.trim().toLowerCase());
           var attachment = " ";
 
           //Obtendo o usuario
@@ -253,15 +256,17 @@ function obtemDadoUsuario(userId)   {
  * @param  {String} string acentuada
  * @return {String} string sem acento
  */
-
-var map={"ñ":"n","Ñ":"N","â":"a","Â":"A","à":"a","À":"A","á":"a","Á":"A","ã":"a","Ã":"A","ê":"e","Ê":"E","è":"e","È":"E","é":"e","É":"E","î":"i","Î":"I","ì":"i","Ì":"I","í":"i","Í":"I","õ":"o","Õ":"O","ô":"o","Ô":"O","ò":"o","Ò":"O","ó":"o","Ó":"O","ü":"u","Ü":"U","û":"u","Û":"U","ú":"u","Ú":"U","ù":"u","Ù":"U","ç":"c","Ç":"C"};
-
 function removerAcentos(s)  { 
+  console.log(s);
   return s.replace(/[\W\[\] ]/g, function(a) {
-    return map[a]||a;
+    console.log(mapaCaracteres[a]||a);
+    return mapaCaracteres[a]||a;
   }) 
 };
 
+/**************************************************************************************
+Inicio do server da Aplicacao
+**************************************************************************************/
 console.log ("Inicializando App...");
 
 app = express();
