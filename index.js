@@ -101,7 +101,7 @@ function receivedMessage (event)  {
                 msg = usuario.first_name + ", Édouard Manet (Paris, 23 de janeiro de 1832 — Paris, 30 de abril de 1883) foi um pintor e artista gráfico francês e uma das figuras mais importantes da arte do século XIX. ";
 
               } else if (messageText == 'machado de assis') {
-                msg = usuario.first_name + ", Joaquim Maria Machado de Assis (Rio de Janeiro, 1839 - 1908) foi um escritor brasileiro, amplamente considerado como o maior nome da literatura nacional. Escreveu em praticamente todos os gêneros literários, sendo poeta, romancista, cronista, dramaturgo, contista, folhetinista, jornalista, e crítico literário...";
+                msg = usuario.first_name + ", Joaquim Maria Machado de Assis (Rio de Janeiro, 1839 - 1908) foi um escritor brasileiro, amplamente considerado como o maior nome da literatura nacional. Escreveu em todos os gêneros literários, sendo poeta, romancista, cronista, dramaturgo, contista, folhetinista, jornalista, e crítico literário...";
               
               } else if (messageText == 'ajuda' || messageText=='help' || messageText=='duvida')  {
                 msg = usuario.first_name + ", basta informar o artista ou a obra que você quer saber a informação. Como ainda estou aprendendo pode ser que ainda não poderei te responder.";
