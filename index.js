@@ -60,6 +60,7 @@ function receivedMessage (event)  {
         default:
           var msg = "";
           messageText = removerAcentos(messageText.trim().toLowerCase());
+          console.log("MessageText = " + messageText);
           var attachment = " ";
 
           //Obtendo o usuario
@@ -257,9 +258,9 @@ function obtemDadoUsuario(userId)   {
  * @return {String} string sem acento
  */
 function removerAcentos(s)  { 
-  console.log(s);
+  //console.log(s);
   return s.replace(/[\W\[\] ]/g, function(a) {
-    console.log(mapaCaracteres[a]||a);
+    //console.log(mapaCaracteres[a]||a);
     return mapaCaracteres[a]||a;
   }) 
 };
